@@ -159,6 +159,18 @@ void BlinkLedRed(){ //Fazer o led piscar 5 vezes por segundo (1 segundo = 1000 m
     sleep_ms(100); 
 }
 
+
+//Função de interrupção "É possivel observar o bounce do botão"
+void gpio_irq_handler(uint gpio, uint32_t events){
+    if(gpio == BOTAO_A){
+    //funcao para incrementar a cor
+    }
+
+    if(gpio == BOTAO_B){
+    //funcao para decrementar a cor    
+    }
+}
+
 int main(){
     PIO pio = pio0;
     int sm = 0;
@@ -166,6 +178,9 @@ int main(){
     ws2812_program_init(pio, sm, offset, WS2812_PIN, 800000, IS_RGBW);
 
     InicializarGPIOs();
+    //Configuração da interrupção com callback
+    gpio_set_irq_enabled_with_callback(BOTAO_A, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
+    gpio_set_irq_enabled_with_callback(BOTAO_B, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
 
     while (1)
     {
