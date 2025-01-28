@@ -134,17 +134,18 @@ void set_one_led(uint8_t r, uint8_t g, uint8_t b)
     }
 }
 
-void InicializarGPIOs(){
+void InicializarGPIOs(){    //Para modularizar o codigo, inicializar os GPIOs
     stdio_init_all();
     gpio_init(LED_PIN_RED);
     gpio_set_dir(LED_PIN_RED, GPIO_OUT);
     gpio_put(LED_PIN_RED, 0);
 }
 
-void BlinkLedRed(){
+void BlinkLedRed(){ //Fazer o led piscar 5 vezes por segundo (1 segundo = 1000 milisegundos)
     gpio_put(LED_PIN_RED, 1);
     sleep_ms(100); 
     gpio_put(LED_PIN_RED, 0); 
+    sleep_ms(100); 
 }
 
 int main(){
