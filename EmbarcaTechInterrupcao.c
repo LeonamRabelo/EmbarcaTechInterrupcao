@@ -7,6 +7,8 @@
 
 #define IS_RGBW false
 #define NUM_PIXELS 25
+#define BOTAO_A 5
+#define BOTAO_B 6
 #define WS2812_PIN 7
 #define LED_PIN_RED 13
 
@@ -90,9 +92,9 @@ bool led_Seis[NUM_PIXELS] = {
 
 // Número 7
 bool led_Sete[NUM_PIXELS] = {
-    0, 0, 1, 0, 0,      
-    0, 0, 1, 0, 0,   //ok
-    0, 0, 1, 0, 0,    
+    0, 1, 0, 0, 0,      
+    0, 0, 0, 1, 0,   //ok
+    0, 1, 0, 0, 0,    
     0, 0, 0, 1, 0,  
     0, 1, 1, 1, 0  
 };
@@ -123,7 +125,7 @@ void set_one_led(uint8_t r, uint8_t g, uint8_t b)
     // Define todos os LEDs com a cor especificada
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        if (led_Nove[i])
+        if (led_Sete[i])
         {
             put_pixel(color); // Liga o LED com um no buffer
         }
@@ -136,9 +138,18 @@ void set_one_led(uint8_t r, uint8_t g, uint8_t b)
 
 void InicializarGPIOs(){    //Para modularizar o codigo, inicializar os GPIOs
     stdio_init_all();
+
     gpio_init(LED_PIN_RED);
     gpio_set_dir(LED_PIN_RED, GPIO_OUT);
     gpio_put(LED_PIN_RED, 0);
+
+    gpio_init(BOTAO_A);
+    gpio_set_dir(BOTAO_A, GPIO_IN);
+    gpio_pull_up(BOTAO_A);
+
+    gpio_init(BOTAO_B); 
+    gpio_set_dir(BOTAO_B, GPIO_IN);
+    gpio_pull_up(BOTAO_B);
 }
 
 void BlinkLedRed(){ //Fazer o led piscar 5 vezes por segundo (1 segundo = 1000 milisegundos)
@@ -160,9 +171,6 @@ int main(){
     {
     BlinkLedRed();
     set_one_led(led_r, led_g, led_b);
-        //sleep_ms(tempo);
-        //set_one_led(0, 0, 0);
-        //sleep_ms(tempo);
     }
 
     return 0;
