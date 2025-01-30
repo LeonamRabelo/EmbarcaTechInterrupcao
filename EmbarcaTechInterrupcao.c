@@ -27,97 +27,93 @@ static inline uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b)
     return ((uint32_t)(r) << 8) | ((uint32_t)(g) << 16) | (uint32_t)(b);
 }
 
-// Número 0
-bool led_Zero[NUM_PIXELS] = {
+//variavel para inicializar o numero com 0
+int numero = 0;
+
+bool led_numeros[10][NUM_PIXELS] = {
+    //Número 0
+    {
     0, 1, 1, 1, 0,      
     0, 1, 0, 1, 0, 
-    0, 1, 0, 1, 0,    //ok
+    0, 1, 0, 1, 0,   
     0, 1, 0, 1, 0,  
     0, 1, 1, 1, 0   
-};
+    },
 
-// Número 1
-bool led_Um[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
-    0, 0, 1, 0, 0, //ok
+    //Número 1
+    {0, 1, 1, 1, 0,      
+    0, 0, 1, 0, 0, 
     0, 0, 1, 0, 0,    
     0, 1, 1, 0, 0,  
     0, 0, 1, 0, 0   
-};
+    },
 
-// Número 2
-bool led_Dois[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
+    //Número 2
+    {0, 1, 1, 1, 0,      
     0, 1, 0, 0, 0, 
     0, 1, 1, 1, 0,    
-    0, 0, 0, 1, 0,  //ok
+    0, 0, 0, 1, 0,
     0, 1, 1, 1, 0   
-};
+    },
 
-// Número 3
-bool led_Tres[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
-    0, 0, 0, 1, 0, //ok
+    //Número 3
+    {0, 1, 1, 1, 0,      
+    0, 0, 0, 1, 0, 
     0, 1, 1, 1, 0,    
     0, 0, 0, 1, 0,  
     0, 1, 1, 1, 0   
-};
+    },
 
-// Número 4
-bool led_Quatro[NUM_PIXELS] = {
-    0, 1, 0, 0, 0,      
+    //Número 4
+    {0, 1, 0, 0, 0,      
     0, 0, 0, 1, 0, 
     0, 1, 1, 1, 0,    
-    0, 1, 0, 1, 0,      //ok
+    0, 1, 0, 1, 0,     
     0, 1, 0, 1, 0   
-};
+    },
 
-// Número 5
-bool led_Cinco[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
+    //Número 5
+    {0, 1, 1, 1, 0,      
     0, 0, 0, 1, 0, 
-    0, 1, 1, 1, 0,    //ok
+    0, 1, 1, 1, 0,   
     0, 1, 0, 0, 0,  
     0, 1, 1, 1, 0   
-};
+    },
 
-// Número 6
-bool led_Seis[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
+    //Número 6
+    {0, 1, 1, 1, 0,      
     0, 1, 0, 1, 0, 
-    0, 1, 1, 1, 0,    //ok
+    0, 1, 1, 1, 0,    
     0, 1, 0, 0, 0,  
     0, 1, 1, 1, 0   
-};
+    },
 
-// Número 7
-bool led_Sete[NUM_PIXELS] = {
-    0, 1, 0, 0, 0,      
-    0, 0, 0, 1, 0,   //ok
+    //Número 7
+    {0, 1, 0, 0, 0,      
+    0, 0, 0, 1, 0,   
     0, 1, 0, 0, 0,    
     0, 0, 0, 1, 0,  
     0, 1, 1, 1, 0  
-};
+    },
 
-// Número 8
-bool led_Oito[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
+    //Número 8
+    {0, 1, 1, 1, 0,      
     0, 1, 0, 1, 0, 
-    0, 1, 1, 1, 0,    //ok
+    0, 1, 1, 1, 0,    
     0, 1, 0, 1, 0,  
     0, 1, 1, 1, 0   
-};
+    },
 
-// Número 9
-bool led_Nove[NUM_PIXELS] = {
-    0, 1, 1, 1, 0,      
+    //Número 9
+    {0, 1, 1, 1, 0,      
     0, 0, 0, 1, 0, 
-    0, 1, 1, 1, 0,    //ok
+    0, 1, 1, 1, 0,    
     0, 1, 0, 1, 0,  
     0, 1, 1, 1, 0   
+    }
 };
 
-void set_one_led(uint8_t r, uint8_t g, uint8_t b)
+void set_one_led(uint8_t r, uint8_t g, uint8_t b, int numero)
 {
     // Define a cor com base nos parâmetros fornecidos
     uint32_t color = urgb_u32(r, g, b);
@@ -125,7 +121,7 @@ void set_one_led(uint8_t r, uint8_t g, uint8_t b)
     // Define todos os LEDs com a cor especificada
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        if (led_Sete[i])
+        if (led_numeros[numero][i])
         {
             put_pixel(color); // Liga o LED com um no buffer
         }
@@ -162,12 +158,22 @@ void BlinkLedRed(){ //Fazer o led piscar 5 vezes por segundo (1 segundo = 1000 m
 
 //Função de interrupção "É possivel observar o bounce do botão"
 void gpio_irq_handler(uint gpio, uint32_t events){
+    //funcao para incrementar
     if(gpio == BOTAO_A){
-    //funcao para incrementar a cor
+    numero++;
+    if(numero==10){
+        numero=0;
+    }
+    set_one_led(led_r, led_g, led_b, numero);
     }
 
+    //funcao para decrementar
     if(gpio == BOTAO_B){
-    //funcao para decrementar a cor    
+    numero--;
+    if(numero==-1){
+        numero=9;
+    }
+    set_one_led(led_r, led_g, led_b, numero);
     }
 }
 
@@ -185,7 +191,7 @@ int main(){
     while (1)
     {
     BlinkLedRed();
-    set_one_led(led_r, led_g, led_b);
+    set_one_led(led_r, led_g, led_b, numero);
     }
 
     return 0;
