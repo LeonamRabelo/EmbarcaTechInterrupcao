@@ -12,6 +12,8 @@
 #define WS2812_PIN 7
 #define LED_PIN_RED 13
 
+static volatile uint32_t last_time = 0; // Armazena o tempo do último evento (em microssegundos)
+
 // Variável global para armazenar a cor (Entre 0 e 255 para intensidade)
 uint8_t led_r = 0; // Intensidade do vermelho
 uint8_t led_g = 0; // Intensidade do verde
@@ -158,6 +160,11 @@ void BlinkLedRed(){ //Fazer o led piscar 5 vezes por segundo (1 segundo = 1000 m
 
 //Função de interrupção "É possivel observar o bounce do botão"
 void gpio_irq_handler(uint gpio, uint32_t events){
+uint32_t current_time = to_us_since_boot(get_absolute_time());
+
+if(current_time - last_time > 200000){ // 200 ms de debouncing
+    last_time = current_time; // Atualiza o tempo do último evento
+    
     //funcao para incrementar
     if(gpio == BOTAO_A){
     numero++;
@@ -174,7 +181,8 @@ void gpio_irq_handler(uint gpio, uint32_t events){
         numero=9;
     }
     set_one_led(led_r, led_g, led_b, numero);
-    }
+    }  
+}
 }
 
 int main(){
