@@ -1,4 +1,4 @@
-# EmbarcaTech - Interrupção
+# EmbarcaTech - Interrupções no microcontrolador RP2040
 
 Este projeto utiliza a **BitDog Lab** com o **Raspberry Pi Pico W** para controlar uma matriz de LEDs WS2812, exibindo números de 0 a 9, utilizando interrupção nos botões, que são usados para incrementar e decrementar o valor exibido. Além disso, um LED vermelho pisca 5 vezes por segundo.
 
@@ -30,8 +30,7 @@ Este projeto utiliza a **BitDog Lab** com o **Raspberry Pi Pico W** para control
 - SDK da Raspberry Pi Pico.
 - Extensão no VSCode da Raspberry Pi Pico.
 - Configuração do Wokwi no VSCode (Opcional).
-    |Compilação e Execução
-    |Para compilar o projeto, utilize o CMake. Certifique-se de que o CMakeLists.txt está configurado corretamente e siga os passos de compilação com o SDK do     |Raspberry Pi Pico.
+- Compilação e Execução: Para compilar o projeto, utilize o CMake. Certifique-se de que o CMakeLists.txt está configurado corretamente e siga os passos de compilação com o SDK do Raspberry Pi Pico.
   
 **Está disponibilizado toda estrutura para simulação no Wokwi para realização de testes, caso não tenha a placa BitDogLab.**
 
