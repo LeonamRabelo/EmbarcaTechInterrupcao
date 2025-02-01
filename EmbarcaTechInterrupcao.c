@@ -11,8 +11,6 @@
 #define BOTAO_B 6
 #define WS2812_PIN 7
 #define LED_PIN_RED 13
-#define LED_PIN_BLUE 12
-#define LED_PIN_GREEN 11
 
 static volatile uint32_t last_time = 0; // Armazena o tempo do último evento (em microssegundos)
 uint numero = 0;//variavel para inicializar o numero com 0
@@ -134,12 +132,6 @@ void InicializarGPIOs(){
     gpio_init(LED_PIN_RED);
     gpio_set_dir(LED_PIN_RED, GPIO_OUT);
     gpio_put(LED_PIN_RED, 0);
-    gpio_init(LED_PIN_BLUE);
-    gpio_set_dir(LED_PIN_BLUE, GPIO_OUT);
-    gpio_put(LED_PIN_BLUE, 0);
-    gpio_init(LED_PIN_GREEN);
-    gpio_set_dir(LED_PIN_GREEN, GPIO_OUT);
-    gpio_put(LED_PIN_GREEN, 0);
     //Inicializa pinos dos botoes
     gpio_init(BOTAO_A);
     gpio_set_dir(BOTAO_A, GPIO_IN);
