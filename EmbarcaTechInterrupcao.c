@@ -10,18 +10,19 @@
 #define NUM_NUMBERS 10
 #define BOTAO_A 5
 #define BOTAO_B 6
+
 #define WS2812_PIN 7
 #define LED_PIN_RED 13
 #define LED_PIN_BLUE 12
 #define LED_PIN_GREEN 11
 
 static volatile uint32_t last_time = 0; // Armazena o tempo do último evento (em microssegundos)
-uint numero = 0;//variavel para inicializar o numero com 0
+volatile uint numero = 0;//variavel para inicializar o numero com 0, vai ser alterada nas interrupções (volatile)
 
 // Variável global para armazenar a cor (Entre 0 e 255 para intensidade)
 uint8_t led_r = 0; // Intensidade do vermelho
 uint8_t led_g = 0; // Intensidade do verde
-uint8_t led_b = 200; // Intensidade do azul
+uint8_t led_b = 10; // Intensidade do azul
 
 static inline void put_pixel(uint32_t pixel_grb){
     pio_sm_put_blocking(pio0, 0, pixel_grb << 8u);
